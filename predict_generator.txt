@@ -1,0 +1,65 @@
+Python 3.6.5 |Anaconda, Inc.| (default, Mar 29 2018, 13:32:41) [MSC v.1900 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> j_file = open("D:/Проекты Нейронная сеть/1/Эксперимент 6/sixth_expirience.json", "r)
+  File "<stdin>", line 1
+    j_file = open("D:/Проекты Нейронная сеть/1/Эксперимент 6/sixth_expirience.json", "r)
+                                                                                        ^
+SyntaxError: EOL while scanning string literal
+>>> j_file = open("D:/Проекты Нейронная сеть/1/Эксперимент 6/sixth_expirience.json", "r")
+>>> loaded_model = j_file.read()
+>>> import keras
+D:\development_env\GeneralComponents_Shared\Anaconda3_64\lib\site-packages\h5py\__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+Using TensorFlow backend.
+>>> model = keras.models.model_from_json(loaded_model_json)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'loaded_model_json' is not defined
+>>> model = keras.models.model_from_json(loaded_model)
+>>> model.load_weights(r'''D:/Проекты Нейронная сеть/1/Эксперимент 6/sixth_expirience_weights.h5''')
+2019-03-26 18:37:21.605049: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX
+2019-03-26 18:37:22.806769: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1432] Found device 0 with properties:
+name: GeForce GT 710M major: 2 minor: 1 memoryClockRate(GHz): 1.55
+pciBusID: 0000:01:00.0
+totalMemory: 1.00GiB freeMemory: 823.06MiB
+2019-03-26 18:37:22.851367: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1482] Ignoring visible gpu device (device: 0, name: GeForce GT 710M, pci bus id: 0000:01:00.0, compute capability: 2.1) with Cuda compute capability 2.1. The minimum required Cuda capability is 3.0.
+2019-03-26 18:37:22.893808: I tensorflow/core/common_runtime/gpu/gpu_device.cc:982] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-03-26 18:37:22.909982: I tensorflow/core/common_runtime/gpu/gpu_device.cc:988]      0
+2019-03-26 18:37:22.917122: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1001] 0:   N
+>>>  from keras.preprocessing.image import ImageDataGenerator
+  File "<stdin>", line 1
+    from keras.preprocessing.image import ImageDataGenerator
+    ^
+IndentationError: unexpected indent
+>>> from keras.preprocessing.image import ImageDataGenerator
+>>> input_shape = (150, 150, 3)
+>>> test_data = ImageDataGenerator(rescale = 1. / 255)
+>>> test_gen = test_data.flow_from_directory(r'''D:\Проекты Нейронная сеть\1\nn_for_diplom\test\123''', target_size=(150, 150), batch_size=100)
+Found 0 images belonging to 0 classes.
+>>> test_gen = test_data.flow_from_directory(r'''D:\Проекты Нейронная сеть\1\nn_for_diplom\test\123''', target_size=(150, 150),class_mode='binary', batch_size=100)
+Found 0 images belonging to 0 classes.
+>>> test_gen = test_data.flow_from_directory(r'''D:\Проекты Нейронная сеть\1\nn_for_diplom\test\123''', target_size=(150, 150), batch_size=100)
+Found 2 images belonging to 1 classes.
+>>> test_gen.reset()
+>>> pred=model.predict_generator(test_gen,verbose=1,steps=306/batch_size)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'batch_size' is not defined
+>>> pred=model.predict_generator(test_gen)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "D:\development_env\GeneralComponents_Shared\Anaconda3_64\lib\site-packages\keras\legacy\interfaces.py", line 91, in wrapper
+    return func(*args, **kwargs)
+  File "D:\development_env\GeneralComponents_Shared\Anaconda3_64\lib\site-packages\keras\engine\training.py", line 1522, in predict_generator
+    verbose=verbose)
+  File "D:\development_env\GeneralComponents_Shared\Anaconda3_64\lib\site-packages\keras\engine\training_generator.py", line 406, in predict_generator
+    raise ValueError('`steps=None` is only valid for a generator'
+ValueError: `steps=None` is only valid for a generator based on the `keras.utils.Sequence` class. Please specify `steps` or use the `keras.utils.Sequence` class.
+>>> pred=model.predict_generator(test_gen,verbose=1,steps=2)
+2/2 [==============================] - 2s 989ms/step
+>>> print(pred)
+[[8.3595878e-01 1.6404125e-01]
+ [1.0000000e+00 1.7450603e-08]
+ [8.3595878e-01 1.6404125e-01]
+ [1.0000000e+00 1.7450603e-08]]
+>>>
